@@ -1,0 +1,146 @@
+INTRODUCTION
+------------
+
+<insert story about trust and human, AI agent, and collaboration, and the modeling (QC) and detection (EEG, behav) of trust>
+
+<insert about the experiment>
+
+
+In the quantum cognition field, the Quantum random walk model has been one of the promising means that describing human behavior in the context of decision making. As such, 
+it can be applied to our current experiment in which a human is teamed with an AI in a mutual decision task. One of the characteristics of the model are the changes of the chance levels between states per time step. This allows the model to be adapted to 
+to describe the evolution and dissolution of the concept of 'Trust', i.e. the intangible judgement of whether the human agent can trust the 
+decisions of the AI.
+
+Our previous work reported a quantum model approach to describe the evolution of trust in a human-AI team setting. However, these simulations did not incorporate events that happened during the experiment; instead, the interaction as a whole was modeled with several parameters. It is however likely, that events and circumstances that happen during such a human-AI team affect the internal trust. We therefore wanted to expand upon our previous modeling approach by inforporating the events, times, and choices that occur during the experiment into the quantum random walk model.
+
+We wanted to incorporate the events, timings and factors in the experiment into the quantum modeling. Specifically, the timestep (impacting how much or how far the the state vector is progressed through time), the human and AI choices (impacting the Hamiltonian used to progress the state vector), and the collapse of the wavefunction (also impacting the state vector) into our modeling approach and see how the quantum random walk model 'holds up', and see what kinds of modeling decisions make sense when applying quantum models to real-world scenario's, and what insights can be obtained for future work on other quantum model approaches.
+
+
+Formalizing the problem in this way provides an opportunity to model the intdeterminite state of trust, based on the events that happened throughout the
+experiment. THis is a new addition, as in our previous work, we just determine parameters to fit the modeled trust level to our measured trust levels, but in effect
+the actual responses were not takin into account. With this approach, we postutalte that internal trust levels do not exist in a vaccuum, but are affected
+by the history of actions and observations of the participant.
+
+Modeling assumptions
+--------------------
+We model the level of trust with a state vector consisting of 10 levels. The first level models between 0 and 10% trust; the second models 10-20%, up until the 10th level modeling for 90-100% trust. Given the trial and block structure of our paradigm, trust is not directly sampled until at the end of each block, and therefore we postulate
+that it therefore an indeterminate state that evolves during subsequent decision of the human (and the perception of the AI agent's decision);
+after 28 such evolutions in total, by asking the the specific question 'How much do you trust the judgements of the AI?' We posit that these decision have impact on the evolution of the internal (indeterminite) trust levels. We furthermore posit that the question at the end causes the human agent to more fully consider its internal state (relating to trust), causing a collapse of the interdetminite state.
+
+The Hamiltonian used in the Qantum random walk is a recipe on how to re-distribute some propensity from each state to other states per timestep, yielding time-evolved states (one per timestep); however, without any outside changes affecting the system and a constant hamiltonian, this exploration will always be periodic. 
+After a certain time, the state will be identical to the initial state. The diagonal of the Hamiltonian yielded in our previous paper, is an indication of the
+direction in which the quantum levels 'explore' other states. For example, an initial state vector which has much energy in low-value states, and combined with
+a hamiltonian with a positive gradeitn on the diagonal, will explore higher states. A hamultonian with a negative gradient on the diagonal will not explore these
+states as much. We posit that a hamiltonian with a positive gradient on the diagonal could represent a 'match' between human and AI judgements (i.e., walking to
+an indeterminite exploration of higher levels of trust). And conversely a hamiltonian with a negative gradient on the diagonal could represent a mismatch. In the case of an absent response, the hamiltonian is again different; with a constant on the diagonal.
+
+We adopt the modeling approach as outlined in the source materials; the book publised; as well as the paper published. We sort;ly summarize the modeling approach, and the modifications needed, below:
+
+The state vector at any time point is represented by 
+\[
+\mathbf{v} =
+\begin{bmatrix}
+v_1 \\
+v_2 \\
+v_3 \\
+v_4 \\
+v_5 \\
+v_6 \\
+v_7 \\
+v_8 \\
+v_9 \\
+v_{10}
+\end{bmatrix}
+\]
+
+And the initial state is determined by the reliability rating as provided by the participant after the practice session.
+The amplitudes of S0 are set according to a gaussian curve of mean (reliability rating/10) and standard deviation of 0.75, sampled
+at 0.5, 1.5, ..., 9.5. The initial state's amplitudes are rescaled to fulfull the condition that the squares sum up to 1.
+
+
+The progression of the states follow the Kolmogorov equation:
+
+\[
+\mathbf{v}(t + \Delta t) = e^{i \mathbf{H} \Delta t \gamma} \mathbf{v}(t)
+\]
+
+\Delta t is the time difference between two consecutive trials; this was calculate from the participant's logged responses.
+This equation introduces the \gamma parameter; this essentially functions as a time scaling to model for different 'speeds' of temporal evolution. In order to model, we take 0.01 and 1 as lower and upper limits; the example as outlined in the source example effectiviely has a value in between these limits.
+
+The hamiltonians that model for a match, a mismatch, and no response, are given below; in our modeling appriach, \alpha and \beta model the two different slopes each individual event is modeled as; the \sigma parameter modeling for diffusion is the fourth modeling parameter. the limits for /alpha, /beta, and /gamma were set as 0.1 to 10.
+
+\[
+\mathbf{H}_{+} =
+\begin{bmatrix}
+-4.5\alpha & \sigma & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\sigma & -3.5\alpha & \sigma & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & \sigma & -2.5\alpha & \sigma & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & \sigma & -1.5\alpha & \sigma & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & \sigma & -0.5\alpha & \sigma & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & \sigma & 0.5\alpha & \sigma & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & \sigma & 1.5\alpha & \sigma & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & \sigma & 2.5\alpha & \sigma & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma & 3.5\alpha & \sigma \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma & 4.5\alpha
+\end{bmatrix}
+\]
+
+\[
+\mathbf{H}_{-} =
+\begin{bmatrix}
+4.5\beta & \sigma & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\sigma & 3.5\beta & \sigma & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & \sigma & 2.5\beta & \sigma & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & \sigma & 1.5\beta & \sigma & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & \sigma & 0.5\beta & \sigma & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & \sigma & -0.5\beta & \sigma & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & \sigma & -1.5\beta & \sigma & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & \sigma & -2.5\beta & \sigma & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma & -3.5\beta & \sigma \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma & -4.5\beta
+\end{bmatrix}
+\]
+
+\[
+\mathbf{H}_{0} =
+\begin{bmatrix}
+1 & \sigma & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\sigma & 1 & \sigma & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & \sigma & 1 & \sigma & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & \sigma & 1 & \sigma & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & \sigma & 1 & \sigma & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & \sigma & 1 & \sigma & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & \sigma & 1 & \sigma & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & \sigma & 1 & \sigma & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma & 1 & \sigma \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \sigma & 1
+\end{bmatrix}
+\]
+
+In order to search optimal parameters for /gamma, /alpha, /beta, and /sigma, we performed a global optimization search given the search parameter thresholds given above, using the mean squared error as the cost function, i.e. the squared differences between modeled and observed reliability rating, averaged over the 20 blocks. 
+
+
+\[
+\text{MSE} = \frac{1}{N} \sum_{i=1}^{N} \left( y_i - \hat{y}_i \right)^2
+\]
+
+
+IN SILICO EXPERIMENTS
+---------------------
+In order to gain insight in how different hamiltonians might affect the system, we performed toy/in silico simulations that assessed the effect on the state vector. Specifically, we looked at the amplitude of the propensities for each of the 10 states, given an initial state vector with a high or a low loading. For each of the three Hamiltonials, H+, Hc and H-, we examine how these loadings progress over time. See Figure 1 for a depiction of these six simulations.
+
+<insert Figure 1;>
+<legend Fig1>
+
+The initial state amplitudes of the 'high' S0 are set to 7.5 (and standard deviation of 0.75). Evolving this state with the positive Hamiltonian shows that the propensities/amplitudes of S0 are exploring the high states more than the low states (Fig 1A); this is consistent with the positive gradient along the diagonal of H+. Conversely, application of H- (Fig 1C) to the high-loaded S0 causes the lower states to be explored over time. Both of these processes are cyclical, with recurring patterns over time. Remarkedly, the Hc, the constant-diagonal Hamiltonian, causes all the states to receive about equal exploration over time (Fig 1B). This was not entirely expected, but it shows the potential importance of non-commits that occur during the experiment on the quantum evolution of the trust levels.
+
+
+
+
+Participant SIMULATIONS
+-----------------------
+
+
+
+
+
