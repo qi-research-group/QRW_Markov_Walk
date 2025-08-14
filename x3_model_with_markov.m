@@ -19,9 +19,9 @@
 
 
 % lets go:
-dhist = dir('../../history_files/history_*.txt');
-drating = dir('../../history_files/ratings_*.txt');
-dtimings = dir('../../history_files/times_*.txt');
+dhist = dir('history_files/history_*.txt');
+drating = dir('history_files/ratings_*.txt');
+dtimings = dir('history_files/times_*.txt');
 
 % location_of_raw_datafiles = '/home/vanderj2/mnt/lyrascratch/faces_experiment/preprocessed';
 
@@ -64,7 +64,7 @@ for i_d = 1:numel(dhist)
         
         t = load([dtimings(i_d).folder filesep dtimings(i_d).name]);
         t(1:28) = []; % omit practice block
-        
+        % h(1:28) = []
         
         this_sub = regexp(dhist(i_d).name,'[0-9]{3}','match'); this_sub=this_sub{1};
         
@@ -175,6 +175,7 @@ for i_d = 1:numel(dhist)
             
             lb = [1/100 0.01   0.01   0.01  ];
             ub = [1       10     10     10  ];
+            
             
             do_particle_swarm = 0;
             if do_particle_swarm

@@ -25,9 +25,9 @@ dtimings = dir('../../history_files/times_*.txt');
 
 % location_of_raw_datafiles = '/home/vanderj2/mnt/lyrascratch/faces_experiment/preprocessed';
 
-SDs = [0.05:0.10:2.0];
+SDs = [0.75]; %[0.05:0.10:2.0];
 saved_model_parameters = {};
-for i_d = 32 % :numel(dhist)
+for i_d = 1:numel(dhist)
     
     for i_SD = 1:numel(SDs)
         this_SD = SDs(i_SD);
@@ -86,7 +86,7 @@ for i_d = 32 % :numel(dhist)
         Hp_SLOPE = 1; % another scaling factor; of the forces that are embedded within the H.
         Hm_SLOPE = 1;
         sigmasquared = 1;
-        SD = 0.05;
+        SD = this_SD; %0.05;
         
         
         
